@@ -1,53 +1,95 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 첫번째 아이디어</title>
+    <title>오늘도 힘내세요!</title>
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #09090b 0%, #1e1b4b 100%);
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             overflow: hidden;
+            color: #333;
         }
-        
+
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            padding: 5rem 7rem;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 5rem 8rem;
+            border-radius: 32px;
+            box-shadow: 0 20px 50px 0 rgba(142, 154, 173, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
             text-align: center;
             transform: translateY(0);
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             animation: fadeIn 1.2s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 50px 0 rgba(168, 85, 247, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 30px 60px 0 rgba(142, 154, 173, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         h1 {
-            color: #d8b4fe;
-            font-size: 5.5rem;
-            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            color: #2b303a;
+            font-size: 40px;
+            font-weight: 800;
             margin: 0;
-            letter-spacing: -0.03em;
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-            background: linear-gradient(to right, #f3e8ff, #d8b4fe, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .action-btn {
+            position: relative;
+            z-index: 1;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-family: inherit;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.45);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
 
         @keyframes fadeIn {
@@ -55,52 +97,93 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Decorative glowing circles behind */
+        /* Decorative soft pastel glowing circles behind */
         .glow-circle {
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(100px);
             z-index: -1;
-            opacity: 0.5;
-            animation: float 12s infinite ease-in-out alternate;
+            opacity: 0.6;
+            animation: float 14s infinite ease-in-out alternate;
         }
 
         .circle-1 {
-            width: 400px;
-            height: 400px;
-            top: 10%;
-            left: 15%;
-            background: linear-gradient(to right, #7e22ce 0%, #c084fc 100%);
+            width: 450px;
+            height: 450px;
+            top: 5%;
+            left: 10%;
+            background: linear-gradient(to right, #ffd1ff 0%, #fad0c4 100%);
         }
 
         .circle-2 {
-            width: 500px;
-            height: 500px;
-            bottom: 5%;
-            right: 10%;
-            background: linear-gradient(to right, #4c1d95 0%, #db2777 100%);
-            animation-delay: -6s;
+            width: 550px;
+            height: 550px;
+            bottom: -5%;
+            right: 5%;
+            background: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 100%);
+            animation-delay: -7s;
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -60px) scale(1.1); }
-            100% { transform: translate(-30px, 30px) scale(0.9); }
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(40px, -60px) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-30px, 30px) scale(0.95);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="glow-circle circle-1"></div>
     <div class="glow-circle circle-2"></div>
-    
+
     <div class="card">
-        <h1>내 첫 번째 아이디어</h1>
+        <h1 id="quote-text">오늘도 힘내세요!</h1>
+        <button id="next-btn" class="action-btn">다음 문장 보기</button>
     </div>
+
+    <script>
+        const quotes = [
+            '오늘도 힘내세요!',
+            '오늘도 해냈어요!.',
+            '조금씩 나아지고 있어요.',
+            '이대로 계속 가봅시다.'
+        ];
+
+        let currentIndex = 0;
+        const quoteText = document.getElementById('quote-text');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Enable smooth fade transition on text
+        quoteText.style.transition = 'opacity 0.3s ease-in-out';
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % quotes.length;
+
+            // Step 1: Fade out
+            quoteText.style.opacity = '0';
+
+            // Step 2: Change text and fade back in
+            setTimeout(() => {
+                quoteText.textContent = quotes[currentIndex];
+                quoteText.style.opacity = '1';
+            }, 300);
+        });
+    </script>
 </body>
+
 </html>
