@@ -7,17 +7,162 @@
     <title>오늘도 힘내세요!</title>
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary-color: #4c1d95;
+            --bg-gradient: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            --text-main: #1e1b4b;
+            --text-muted: #4b5563;
+        }
+
         body,
         html {
             height: 100%;
             margin: 0;
             display: flex;
+            flex-direction: column;
+            background: var(--bg-gradient);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            color: var(--text-main);
+        }
+
+        header {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+            z-index: 10;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .star-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .menu-item:hover {
+            opacity: 0.8;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            overflow: hidden;
-            color: #333;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+            padding: 6rem 2rem;
+            gap: 10rem;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 3.5rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 2.5rem;
+            border-radius: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-profile {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .user-name {
+            font-weight: 800;
+            color: var(--text-main);
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1.05rem;
+            font-weight: 400;
+            font-style: italic;
+            margin: 0;
+        }
+
+        footer {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1rem;
+            border-top: 1px solid #e5e7eb;
+            z-index: 10;
         }
 
         .card {
@@ -34,6 +179,7 @@
             animation: fadeIn 1.2s ease-out forwards;
             position: relative;
             overflow: hidden;
+            width: fit-content;
         }
 
         .card::before {
@@ -73,18 +219,19 @@
             font-size: 1.1rem;
             font-weight: 700;
             color: #ffffff;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: var(--primary-color);
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.25);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             font-family: inherit;
         }
 
         .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.45);
+            transform: translateY(-5px) scale(1.05);
+            background: var(--secondary-color);
+            box-shadow: 0 15px 30px rgba(76, 29, 149, 0.4);
         }
 
         .action-btn:active {
@@ -119,7 +266,7 @@
             height: 450px;
             top: 5%;
             left: 10%;
-            background: linear-gradient(to right, #ffd1ff 0%, #fad0c4 100%);
+            background: linear-gradient(to right, #ddd6fe 0%, #c4b5fd 100%);
         }
 
         .circle-2 {
@@ -127,7 +274,7 @@
             height: 550px;
             bottom: -5%;
             right: 5%;
-            background: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 100%);
+            background: linear-gradient(to right, #ede9fe 0%, #ddd6fe 100%);
             animation-delay: -7s;
         }
 
@@ -144,17 +291,105 @@
                 transform: translate(-30px, 30px) scale(0.95);
             }
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .header-menu {
+                gap: 1.5rem;
+            }
+
+            main {
+                padding: 4rem 1.5rem;
+                gap: 6rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .card {
+                padding: 4rem 2rem;
+                width: 90%;
+            }
+
+            #quote-text {
+                font-size: 2.2rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .testimonial-card {
+                padding: 2rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="glow-circle circle-1"></div>
-    <div class="glow-circle circle-2"></div>
+    <header>
+        <div class="header-title">
+            <svg class="star-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            나의 첫 서비스
+        </div>
+        <div class="header-menu">
+            <span class="menu-item">소개</span>
+            <span class="menu-item">기능</span>
+            <span class="menu-item">문의</span>
+        </div>
+    </header>
 
-    <div class="card">
-        <h1 id="quote-text">오늘도 힘내세요!</h1>
-        <button id="next-btn" class="action-btn">다음 문장 보기</button>
-    </div>
+    <main>
+        <div class="glow-circle circle-1"></div>
+        <div class="glow-circle circle-2"></div>
+
+        <!-- 핵심 기능 소개 섹션 -->
+        <section class="section">
+            <h2 class="section-title">핵심 기능 소개</h2>
+            <div class="card">
+                <h1 id="quote-text">오늘도 힘내세요!</h1>
+                <button id="next-btn" class="action-btn">다음 문장 보기</button>
+            </div>
+        </section>
+
+        <!-- 사용자 후기 섹션 -->
+        <section class="section">
+            <h2 class="section-title">사용자 후기</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <img src="/Users/general/.gemini/antigravity/brain/183d2bc5-9d96-44e9-8ae1-c5997a190149/user_profile_1_1775110757265.png"
+                            class="user-profile" alt="사용자 1">
+                        <span class="user-name">김지은 님</span>
+                    </div>
+                    <p class="testimonial-text">"매일 아침 이 서비스를 통해 긍정적인 에너지를 얻고 있어요. 디자인이 너무 깔끔하고 예뻐서 자주 방문하게 됩니다!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <img src="/Users/general/.gemini/antigravity/brain/183d2bc5-9d96-44e9-8ae1-c5997a190149/user_profile_2_retry_1775110944409.png"
+                            class="user-profile" alt="사용자 2">
+                        <span class="user-name">이민수 님</span>
+                    </div>
+                    <p class="testimonial-text">"복잡한 기능 없이 딱 필요한 위로의 메시지를 전해주는 게 정말 매력적이에요. 주변 친구들에게도 추천하고 있습니다."</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>&copy;2026 My Service</footer>
 
     <script>
         const quotes = [
