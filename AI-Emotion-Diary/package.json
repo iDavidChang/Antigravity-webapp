@@ -1,0 +1,13 @@
+{
+  "name": "ai-emotion-diary",
+  "version": "1.0.0",
+  "description": "AI Emotion Diary with Vercel Serverless Functions",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "start": "serve"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  }
+}
