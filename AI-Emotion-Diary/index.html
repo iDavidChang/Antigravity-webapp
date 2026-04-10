@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 감정일기 - 오늘의 당신을 기록하세요</title>
+    <meta name="description" content="AI가 당신의 하루를 분석하고 따뜻한 위로를 전해드리는 스마트 감정일기 서비스입니다.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="app-container">
+        <header class="app-header">
+            <h1 id="main-title">오늘의 하루는 어땠나요?</h1>
+            <p class="subtitle">솔직한 마음을 들려주세요. AI가 귀 기울여 듣고 있어요.</p>
+        </header>
+
+        <section class="input-section">
+            <textarea id="diary-input" placeholder="여기에 당신의 이야기를 적어보세요... (예: 오늘 정말 멋진 일이 있었어!)" aria-label="일기 입력창"></textarea>
+            
+            <div class="button-group">
+                <button id="btn-voice" class="btn secondary">
+                    <span class="icon">🎙️</span> 음성으로 입력하기
+                </button>
+                <button id="btn-analyze" class="btn primary">
+                    <span class="icon">✨</span> 분석 요청하기
+                </button>
+            </div>
+        </section>
+
+        <section class="output-section">
+            <h2 class="section-subtitle">AI의 답변</h2>
+            <div id="ai-response-box" class="response-box">
+                <p id="ai-response-text">여기에 AI의 답변이 표시됩니다.</p>
+                <div id="loading-indicator" class="hidden">
+                    <div class="spinner"></div>
+                    <span>AI가 당신의 마음을 읽는 중...</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
