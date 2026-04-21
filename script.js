@@ -1,5 +1,5 @@
-import CONFIG from './config.js';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+// import CONFIG from './config.js'; 
+// import { GoogleGenerativeAI } from '@google/generative-ai';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Lucide Icons
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceBtn = document.getElementById('voiceBtn');
     const analyzeBtn = document.getElementById('analyzeBtn');
     const aiResponse = document.getElementById('aiResponse');
+    const historyList = document.getElementById('historyList');
 
     // --- 음성 인식 설정 ---
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -86,13 +87,48 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('ai_response', response);
     };
 
+    // --- 히스토리 기능 ---
+    const fetchHistory = async () => {
+        try {
+            const response = await fetch('/api/history');
+            const result = await response.json();
+            
+            if (result.success) {
+                renderHistory(result.data);
+            }
+        } catch (error) {
+            console.error('히스토리 불러오기 실패:', error);
+        }
+    };
+
+    const renderHistory = (data) => {
+        if (!data || data.length === 0) {
+            historyList.innerHTML = '<div class="empty-message">저장된 일기가 없습니다.</div>';
+            return;
+        }
+
+        historyList.innerHTML = data.map(item => {
+            const date = new Date(item.createdAt).toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            return `
+                <div class="history-card">
+                    <span class="date">${date}</span>
+                    <div class="diary-content">${item.diary.replace(/\n/g, '<br>')}</div>
+                    <div class="ai-answer">${item.aiResponse.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+        }).join('');
+    };
+
     // 페이지 로드 시 실행
     loadSavedData();
-
-    // --- Gemini API 설정 ---
-    const genAI = new GoogleGenerativeAI(CONFIG.GEMINI_API_KEY);
-    // 사용자 요청에 따라 gemini-2.5-flash 모델을 사용합니다.
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    fetchHistory();
 
     // --- 분석 요청 클릭 ---
     analyzeBtn.addEventListener('click', async () => {
@@ -108,13 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
         analyzeBtn.disabled = true;
         
         try {
-            const prompt = `너는 심리 상담가야. 사용자가 작성한 일기 내용을 읽고, 사용자의 감정을 한 단어(예: 기쁨, 슬픔, 분노, 불안, 평온)로 요약해 줘. 그리고 그 감정에 공감해주고, 따뜻한 응원의 메시지를 2~3문장으로 작성해 줘. 답변 형식은 반드시 '감정:[요약된 감정]\n[응원 메시지]'와 같이 줄바꿈을 포함해서 보내줘.
-            
-            사용자의 일기 내용: "${text}"`;
+            // 백엔드 API (api/analyze.js) 호출
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ diaryText: text })
+            });
 
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const responseText = response.text();
+            const result = await response.json();
+
+            if (!result.success) {
+                throw new Error(result.message || '분석 중 오류가 발생했습니다.');
+            }
+
+            const responseText = result.responseText;
 
             // 답변 표시 및 스타일 조정
             const formattedResponse = responseText.replace(/\n/g, '<br>');
@@ -124,8 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
             aiResponse.style.justifyContent = 'flex-start';
             aiResponse.innerHTML = formattedResponse;
             
-            // 로컬 스토리지에 데이터 저장
+            // 로컬 스토리지에 데이터 저장 (기존 기능 유지)
             saveToLocal(text, formattedResponse);
+            
+            // 분석 성공 후 히스토리 갱신
+            fetchHistory();
             
         } catch (error) {
             console.error('Gemini API 상세 오류:', error);

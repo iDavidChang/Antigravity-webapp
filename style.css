@@ -165,3 +165,63 @@ h2 {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.history-section {
+  margin-top: 50px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 30px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.history-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  border-color: var(--primary-color);
+}
+
+.history-card .date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.history-card .diary-content {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  line-height: 1.5;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.history-card .ai-answer {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  border-left: 3px solid var(--primary-color);
+  padding-left: 12px;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+  font-size: 0.9rem;
+}
